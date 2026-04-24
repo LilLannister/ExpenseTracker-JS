@@ -25,18 +25,18 @@ export default function Home() {
     setExpenses(updated);
   };
 
-  const updateExpense = (updatedExpense: any) => {
-    if (editingIndex !== null) {
-      return;
-    }
+  const updateExpense = (updatedExpense: Expense) => {
+  if (editingIndex === null) {
+    return;
+  }
 
   const updatedExpenses = expenses.map((expense, index) =>
-      index === editingIndex ? updatedExpense : expense
-    );
-    
-    setExpenses(updatedExpenses);
-    setEditingIndex(null);  
-  };
+    index === editingIndex ? updatedExpense : expense
+  );
+
+  setExpenses(updatedExpenses);
+  setEditingIndex(null);
+};
 
   const startEditExpense = (index: number) => {
     setEditingIndex(index);
@@ -46,16 +46,16 @@ export default function Home() {
     <div className="container mt-4">
       <Header />
       <SummaryCards />
-      <ExpenseForm 
+      <ExpenseForm
         onAdd={addExpense}
         onUpdate={updateExpense}
-        editingExpense={editingIndex !== null ? expenses[editingIndex] : null} 
-        />
-      <ExpenseList 
-        expenses={expenses} 
+        editingExpense={editingIndex !== null ? expenses[editingIndex] : null}
+      />
+      <ExpenseList
+        expenses={expenses}
         onDelete={deleteExpense}
-        onEdit={startEditExpense}  
-        />
+        onEdit={startEditExpense}
+      />
     </div>
   );
 }
