@@ -1,6 +1,10 @@
 import { useState } from "react";
 
-export default function ExpenseForm() {
+type Props = {
+    onAdd: (expense: any) => void;
+}
+
+export default function ExpenseForm({ onAdd }: Props) {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
@@ -9,12 +13,14 @@ export default function ExpenseForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log({
-      title,
-      amount,
-      category,
-      date,
-    });
+    const newExpense = {
+        title,
+        amount,
+        category,
+        date,
+    };
+
+    onAdd(newExpense);
 
     setTitle("");
     setAmount("");
