@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import Header from "../Components/Header";
 import SummaryCards from "../Components/SummaryCards";
 import ExpenseForm from "../Components/ExpenseForm";
+import ExpenseList from "../Components/ExpenseList";
 
 export default function Home() {
   const [expenses, setExpenses] = useState<any[]>([]);
@@ -15,8 +17,7 @@ export default function Home() {
       <Header />
       <SummaryCards />
       <ExpenseForm onAdd={addExpense} />
-      
-      <p>Toplam harcama kaydı: {expenses.length}</p>
+      <ExpenseList expenses={expenses} />
     </div>
   );
 }
