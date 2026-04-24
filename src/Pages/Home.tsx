@@ -12,12 +12,17 @@ export default function Home() {
     setExpenses([...expenses, expense]);
   };
 
+  const deleteExpense = (index: number) => {
+    const updated=expenses.filter((_, i) => i !== index);
+    setExpenses(updated);
+  };
+
   return (
     <div className="container mt-4">
       <Header />
       <SummaryCards />
       <ExpenseForm onAdd={addExpense} />
-      <ExpenseList expenses={expenses} />
+      <ExpenseList expenses={expenses} onDelete={deleteExpense} />
     </div>
   );
 }

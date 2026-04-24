@@ -7,9 +7,10 @@ type Expense = {
 
 type Props = {
     expenses: Expense[];
+    onDelete: (index: number) => void;
 };
 
-export default function ExpenseList({ expenses }: Props) {
+export default function ExpenseList({ expenses, onDelete }: Props) {
     return (
         <div className="mb-4">
             <h5 className="mb-3">📋 Harcama Listesi</h5>
@@ -23,6 +24,10 @@ export default function ExpenseList({ expenses }: Props) {
                         <p className="mb-1">Tutar: {expense.amount} ₺</p>
                         <p className="mb-1">Kategori: {expense.category}</p>
                         <p className="mb-0 text-muted">Tarih: {expense.date}</p>
+
+                        <button className="btn btn-sm btn-danger mt-2" onClick={() => onDelete(index)}>
+                            Sil
+                        </button>
                     </div>
                 ))
             )}
