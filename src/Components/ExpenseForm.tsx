@@ -1,27 +1,49 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+type Expense = {
+  title: string;
+  amount: string;
+  category: string;
+  date: string;
+};
 
 type Props = {
-    onAdd: (expense: any) => void;
-}
+  onAdd: (expense: Expense) => void;
+  onUpdate: (expense: Expense) => void;
+  editingExpense: Expense | null;
+};
 
-export default function ExpenseForm({ onAdd }: Props) {
+export default function ExpenseForm({ onAdd, onUpdate, editingExpense }: Props) {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
   const [date, setDate] = useState("");
 
+  useEffect(() => {
+    if (editingExpense) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setTitle(editingExpense.title);
+        setAmount(editingExpense.amount);
+        setCategory(editingExpense.category);
+        setDate(editingExpense.date);
+    }
+  }, [editingExpense]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     const newExpense = {
-        title,
-        amount,
-        category,
-        date,
+      title,
+      amount,
+      category,
+      date,
     };
 
-    onAdd(newExpense);
+    if (editingExpense) {
+      onUpdate(newExpense);
+    } else {
+      onAdd(newExpense);
+    }
 
     setTitle("");
     setAmount("");
@@ -31,7 +53,9 @@ export default function ExpenseForm({ onAdd }: Props) {
 
   return (
     <div className="card p-4 mb-4 shadow-sm">
-      <h5 className="mb-3">➕ Yeni Harcama Ekle</h5>
+      <h5 className="mb-3">
+        {editingExpense ? "✏️ Harcama Güncelle" : "➕ Yeni Harcama Ekle"}
+      </h5>
 
       <form onSubmit={handleSubmit}>
         <input
@@ -62,7 +86,9 @@ export default function ExpenseForm({ onAdd }: Props) {
           onChange={(e) => setDate(e.target.value)}
         />
 
-        <button className="btn btn-primary w-100">Ekle</button>
+        <button className="btn btn-primary w-100">
+          {editingExpense ? "Güncelle" : "Ekle"}
+        </button>
       </form>
     </div>
   );
