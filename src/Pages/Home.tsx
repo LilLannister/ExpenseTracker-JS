@@ -4,6 +4,7 @@ import Header from "../Components/Header";
 import SummaryCards from "../Components/SummaryCards";
 import ExpenseForm from "../Components/ExpenseForm";
 import ExpenseList from "../Components/ExpenseList";
+import ExpenseFilter from "../Components/ExpenseFilter";
 
 type Expense = {
   title: string;
@@ -23,6 +24,12 @@ export default function Home() {
     return [];
   })
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState("all");
+
+  const filteredExpenses =
+    selectedCategory === "all"
+      ? expenses
+      : expenses.filter((expense) => expense.category === selectedCategory);
 
   const addExpense = (expense: any) => {
     setExpenses([...expenses, expense]);
@@ -63,8 +70,13 @@ export default function Home() {
         onUpdate={updateExpense}
         editingExpense={editingIndex !== null ? expenses[editingIndex] : null}
       />
-      <ExpenseList
+      <ExpenseFilter
         expenses={expenses}
+        selectedCategory={selectedCategory}
+        onCategoryChange={setSelectedCategory}
+      />
+      <ExpenseList
+        expenses={filteredExpenses}
         onDelete={deleteExpense}
         onEdit={startEditExpense}
       />
