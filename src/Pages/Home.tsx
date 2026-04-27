@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../Components/Header";
 import SummaryCards from "../Components/SummaryCards";
 import ExpenseForm from "../Components/ExpenseForm";
@@ -13,7 +13,15 @@ type Expense = {
 };
 
 export default function Home() {
-  const [expenses, setExpenses] = useState<any[]>([]);
+  const [expenses, setExpenses] = useState<Expense[]>(() => {
+    const storedExpenses = localStorage.getItem("expenses");
+
+    if (storedExpenses) {
+      return JSON.parse(storedExpenses);
+    }
+    
+    return [];
+  })
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
   const addExpense = (expense: any) => {
@@ -41,6 +49,10 @@ export default function Home() {
   const startEditExpense = (index: number) => {
     setEditingIndex(index);
   };
+  
+  useEffect(() => {
+    localStorage.setItem("expenses", JSON.stringify(expenses));
+  }, [expenses]);
 
   return (
     <div className="container mt-4">
