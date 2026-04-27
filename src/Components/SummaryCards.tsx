@@ -1,3 +1,5 @@
+import { formatCurrency } from "../utils/formatCurrency";
+
 type expense = {
     title: string;
     amount: string;
@@ -15,27 +17,27 @@ export default function SummaryCards({expenses}: Props) {
         0
     );
 
-    const TotalCount = expenses.length;
+    const totalCount = expenses.length;
 
     const currentMonth = new Date().getMonth();
-    const thisMonth = expenses.filter(
-        (e) => new Date(e.date).getMonth() === currentMonth
-    ).length;
+    const thisMonthTotal = expenses
+        .filter((e) => new Date(e.date).getMonth() === currentMonth)
+        .reduce((sum, e) => sum + Number(e.amount), 0);
     
     return (
         <div className="d-flex gap-3 mb-4">
             <div className="card p-3 w-100 text-center">
-                <h4>{totalAmount} ₺</h4>
+                <h4>{formatCurrency(totalAmount)}</h4>
                 <p>Toplam Harcama</p>
             </div>
 
             <div className="card p-3 w-100 text-center">
-                <h4>{TotalCount}</h4>
+                <h4>{totalCount}</h4>
                 <p>Toplam Kayıt</p>
             </div>
 
             <div className="card p-3 w-100 text-center">
-                <h4>{thisMonth}</h4>
+                <h4>{formatCurrency(thisMonthTotal)}</h4>
                 <p>Bu Ay</p>
             </div>
         </div>

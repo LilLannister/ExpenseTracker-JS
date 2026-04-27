@@ -1,3 +1,5 @@
+import { formatCurrency } from "../utils/formatCurrency";
+
 type Expense = {
     title: string;
     amount: string;
@@ -22,7 +24,7 @@ export default function ExpenseList({ expenses, onDelete, onEdit }: Props) {
                 expenses.map((expense, index) => (
                     <div className="card p-3 mb-2 shadow-sm" key={index}>
                         <h6 className="mb-1">{expense.title}</h6>
-                        <p className="mb-1">Tutar: {expense.amount} ₺</p>
+                        <p className="mb-1">Tutar: {formatCurrency(expense.amount)}</p>
                         <p className="mb-1">Kategori: {expense.category}</p>
                         <p className="mb-0 text-muted">Tarih: {expense.date}</p>
 
