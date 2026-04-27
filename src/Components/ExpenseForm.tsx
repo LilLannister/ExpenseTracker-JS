@@ -46,25 +46,28 @@ export default function ExpenseForm({ onAdd, onUpdate, onCancel, editingExpense 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    const normalizedAmount = amount.replace(",", ".");
+    const numericAmount = Number(normalizedAmount);
+
     // validation
     if (!title || !amount || !category || !date) {
       setError("Lütfen tüm alanları doldurun.");
       return;
     }
 
-    if (isNaN(Number(amount))) {
+    if (isNaN(numericAmount)) {
       setError("Tutar geçerli bir sayı olmalıdır.");
       return;
     }
 
-    if(Number(amount) <= 0) {
+    if(numericAmount <= 0) {
       setError("Tutar sıfırdan büyük olmalıdır.");
       return;
     } 
 
     const newExpense = {
       title,
-      amount,
+      amount: normalizedAmount,
       category,
       date,
     };
@@ -101,6 +104,7 @@ export default function ExpenseForm({ onAdd, onUpdate, onCancel, editingExpense 
           className="form-control mb-2"
           placeholder="Tutar"
           value={amount}
+          inputMode="decimal"
           onChange={(e) => {{setAmount(e.target.value); setError("");}}}
         />
 
