@@ -45,7 +45,7 @@ export default function Home() {
   return (
     <div className="container mt-4">
       <Header />
-      <SummaryCards />
+      <SummaryCards expenses={expenses}/>
       <ExpenseForm
         onAdd={addExpense}
         onUpdate={updateExpense}
