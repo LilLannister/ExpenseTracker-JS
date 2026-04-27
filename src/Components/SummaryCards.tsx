@@ -1,6 +1,7 @@
 import { formatCurrency } from "../utils/formatCurrency";
 
-type expense = {
+type Expense = {
+    id: string;
     title: string;
     amount: string;
     category: string;
@@ -8,7 +9,7 @@ type expense = {
 };
 
 type Props = {
-    expenses: expense[];
+    expenses: Expense[];
 };
 
 export default function SummaryCards({expenses}: Props) {

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 type Expense = {
+  id: string;
   title: string;
   amount: string;
   category: string;
@@ -66,6 +67,7 @@ export default function ExpenseForm({ onAdd, onUpdate, onCancel, editingExpense 
     } 
 
     const newExpense = {
+      id: editingExpense ? editingExpense.id : crypto.randomUUID(),
       title,
       amount: normalizedAmount,
       category,
