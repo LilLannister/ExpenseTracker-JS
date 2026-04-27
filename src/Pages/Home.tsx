@@ -29,6 +29,10 @@ export default function Home() {
   const [searchText, setSearchText] = useState("");
   const [sortOption, setSortOption] = useState("newest");
   const [message, setMessage] = useState("");
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem("darkMode") === "true";
+    }
+  );
 
   const filteredExpenses = expenses
     .filter((expense) => {
@@ -107,65 +111,80 @@ export default function Home() {
     localStorage.setItem("expenses", JSON.stringify(expenses));
   }, [expenses]);
 
+  useEffect(() => {
+    localStorage.setItem("darkMode", darkMode.toString());
+  }, [darkMode]);
+
   return (
-    <div className="container mt-4">
-      <Header />
+    <div className={darkMode ? "app dark-mode min-vh-100" : "app min-vh-100"}>
+      <div className="container py-4">
+        <Header />
 
-      <SummaryCards expenses={expenses} />
-
-      <ExpenseForm
-        onAdd={addExpense}
-        onUpdate={updateExpense}
-        onCancel={cancelEdit}
-        editingExpense={editingExpense}
-      />
-
-      <ExpenseFilter
-        expenses={expenses}
-        selectedCategory={selectedCategory}
-        onCategoryChange={setSelectedCategory}
-      />
-
-      <div className="card p-3 mb-4 shadow-sm">
-        <label className="form-label fw-semibold">Harcama Ara</label>
-        <input
-          className="form-control"
-          placeholder="Harcama adını yazın..."
-          value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
-        />
-      </div>
-
-      <div className="card p-3 mb-4 shadow-sm">
-        <label className="form-label fw-semibold">Sırala</label>
-        <select
-          className="form-select"
-          value={sortOption}
-          onChange={(e) => setSortOption(e.target.value)}
-        >
-          <option value="newest">En Yeni</option>
-          <option value="oldest">En Eski</option>
-          <option value="amountHigh">Tutar (Yüksekten Düşüğe)</option>
-          <option value="amountLow">Tutar (Düşükten Yükseğe)</option>
-        </select>
-      </div>
-
-      <ExpenseList
-        expenses={filteredExpenses}
-        onDelete={deleteExpense}
-        onEdit={startEditExpense}
-      />
-
-      {message && (
-        <div
-          className="position-fixed bottom-0 end-0 p-3"
-          style={{ zIndex: 9999 }}
-        >
-          <div className="toast show bg-dark text-white">
-            <div className="toast-body">{message}</div>
-          </div>
+        <div className="text-end mb-3">
+          <button
+            className="btn btn-sm btn-outline-secondary"
+            onClick={() => setDarkMode(!darkMode)}
+          >
+            {darkMode ? "☀️ Light Mode" : "🌙 Dark Mode"}
+          </button>
         </div>
-      )}
+
+        <SummaryCards expenses={expenses} />
+
+        <ExpenseForm
+          onAdd={addExpense}
+          onUpdate={updateExpense}
+          onCancel={cancelEdit}
+          editingExpense={editingExpense}
+        />
+
+        <ExpenseFilter
+          expenses={expenses}
+          selectedCategory={selectedCategory}
+          onCategoryChange={setSelectedCategory}
+        />
+
+        <div className="card p-3 mb-4 shadow-sm">
+          <label className="form-label fw-semibold">Harcama Ara</label>
+          <input
+            className="form-control"
+            placeholder="Harcama adını yazın..."
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
+        </div>
+
+        <div className="card p-3 mb-4 shadow-sm">
+          <label className="form-label fw-semibold">Sırala</label>
+          <select
+            className="form-select"
+            value={sortOption}
+            onChange={(e) => setSortOption(e.target.value)}
+          >
+            <option value="newest">En Yeni</option>
+            <option value="oldest">En Eski</option>
+            <option value="amountHigh">Tutar (Yüksekten Düşüğe)</option>
+            <option value="amountLow">Tutar (Düşükten Yükseğe)</option>
+          </select>
+        </div>
+
+        <ExpenseList
+          expenses={filteredExpenses}
+          onDelete={deleteExpense}
+          onEdit={startEditExpense}
+        />
+
+        {message && (
+          <div
+            className="position-fixed bottom-0 end-0 p-3"
+            style={{ zIndex: 9999 }}
+          >
+            <div className="toast show bg-dark text-white">
+              <div className="toast-body">{message}</div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
