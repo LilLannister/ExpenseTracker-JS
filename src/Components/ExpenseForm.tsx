@@ -18,6 +18,7 @@ export default function ExpenseForm({ onAdd, onUpdate, editingExpense }: Props) 
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
   const [date, setDate] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (editingExpense) {
@@ -31,6 +32,22 @@ export default function ExpenseForm({ onAdd, onUpdate, editingExpense }: Props) 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // validation
+    if (!title || !amount || !category || !date) {
+      setError("Lütfen tüm alanları doldurun.");
+      return;
+    }
+
+    if (isNaN(Number(amount))) {
+      setError("Tutar geçerli bir sayı olmalıdır.");
+      return;
+    }
+
+    if(Number(amount) <= 0) {
+      setError("Tutar sıfırdan büyük olmalıdır.");
+      return;
+    } 
 
     const newExpense = {
       title,
@@ -57,33 +74,35 @@ export default function ExpenseForm({ onAdd, onUpdate, editingExpense }: Props) 
         {editingExpense ? "✏️ Harcama Güncelle" : "➕ Yeni Harcama Ekle"}
       </h5>
 
+      {error && <div className="alert alert-danger">{error}</div>}
+
       <form onSubmit={handleSubmit}>
         <input
           className="form-control mb-2"
           placeholder="Harcama Adı"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) => {setTitle(e.target.value); setError("");}}
         />
 
         <input
           className="form-control mb-2"
           placeholder="Tutar"
           value={amount}
-          onChange={(e) => setAmount(e.target.value)}
+          onChange={(e) => {{setAmount(e.target.value); setError("");}}}
         />
 
         <input
           className="form-control mb-2"
           placeholder="Kategori"
           value={category}
-          onChange={(e) => setCategory(e.target.value)}
+          onChange={(e) => {{setCategory(e.target.value); setError("");}}}
         />
 
         <input
           className="form-control mb-3"
           type="date"
           value={date}
-          onChange={(e) => setDate(e.target.value)}
+          onChange={(e) => {{setDate(e.target.value); setError("");}}}
         />
 
         <button className="btn btn-primary w-100">

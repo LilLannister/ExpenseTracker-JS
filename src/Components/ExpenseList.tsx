@@ -26,13 +26,21 @@ export default function ExpenseList({ expenses, onDelete, onEdit }: Props) {
                         <p className="mb-1">Kategori: {expense.category}</p>
                         <p className="mb-0 text-muted">Tarih: {expense.date}</p>
 
-                        <button className="btn btn-sm btn-danger mt-2" onClick={() => onDelete(index)}>
-                            Sil
-                        </button>
+                        <div className="mt-2 d-flex gap-3">
+                            <button
+                                className="btn btn-sm btn-danger w-100"
+                                onClick={() => onDelete(index)}
+                            >
+                                Sil
+                            </button>
 
-                        <button className="btn btn-sm btn-secondary mt-2 ms-2" onClick={() => onEdit(index)}>
-                            Düzenle
-                        </button>
+                            <button
+                                className="btn btn-sm btn-secondary w-100"
+                                onClick={() => onEdit(index)}
+                            >
+                                Düzenle
+                            </button>
+                            </div>
                     </div>
                 ))
             )}
