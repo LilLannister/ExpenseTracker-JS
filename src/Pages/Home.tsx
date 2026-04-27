@@ -27,6 +27,7 @@ export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState("all"); 
   const [searchText, setSearchText] = useState(""); 
   const [sortOption, setSortOption] = useState("newest");
+  const [message, setMessage] = useState("");
 
   const filteredExpenses = expenses.filter((expenses)=> {
     const matchesCategory =
@@ -61,11 +62,21 @@ export default function Home() {
     
   const addExpense = (expense: any) => {
     setExpenses([...expenses, expense]);
+    setMessage("Harcama başarıyla eklendi!");
+
+    setTimeout(() => {
+      setMessage("");
+    }, 3000);
   };
 
   const deleteExpense = (index: number) => {
     const updated=expenses.filter((_, i) => i !== index);
     setExpenses(updated);
+    setMessage("Harcama başarıyla silindi!");
+
+    setTimeout(() => {
+      setMessage("");
+    }, 3000);
   };
 
   const updateExpense = (updatedExpense: Expense) => {
@@ -79,6 +90,11 @@ export default function Home() {
 
   setExpenses(updatedExpenses);
   setEditingIndex(null);
+  setMessage("Harcama başarıyla güncellendi!");
+
+  setTimeout(() => {
+    setMessage("");
+  }, 3000);
 };
 
   const startEditExpense = (index: number) => {
@@ -135,6 +151,16 @@ export default function Home() {
         onDelete={deleteExpense}
         onEdit={startEditExpense}
       />
+      {message && (
+        <div
+          className="position-fixed bottom-0 end-0 p-3"
+          style={{zIndex: 9999}}
+        > 
+          <div className="toast show bg-dark text-white">
+            <div className="toast-body">{message}</div>
+          </div>
+        </div>
+    )}
     </div>
   );
 }
