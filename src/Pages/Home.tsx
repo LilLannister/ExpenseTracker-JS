@@ -84,6 +84,10 @@ export default function Home() {
   const startEditExpense = (index: number) => {
     setEditingIndex(index);
   };
+
+  const cancelEdit = () => {
+    setEditingIndex(null);
+  }
   
   useEffect(() => {
     localStorage.setItem("expenses", JSON.stringify(expenses));
@@ -96,6 +100,7 @@ export default function Home() {
       <ExpenseForm
         onAdd={addExpense}
         onUpdate={updateExpense}
+        onCancel={cancelEdit}
         editingExpense={editingIndex !== null ? expenses[editingIndex] : null}
       />
       <ExpenseFilter

@@ -10,10 +10,11 @@ type Expense = {
 type Props = {
   onAdd: (expense: Expense) => void;
   onUpdate: (expense: Expense) => void;
+  onCancel?: () => void;
   editingExpense: Expense | null;
 };
 
-export default function ExpenseForm({ onAdd, onUpdate, editingExpense }: Props) {
+export default function ExpenseForm({ onAdd, onUpdate, onCancel, editingExpense }: Props) {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
@@ -29,6 +30,18 @@ export default function ExpenseForm({ onAdd, onUpdate, editingExpense }: Props) 
         setDate(editingExpense.date);
     }
   }, [editingExpense]);
+
+  const handleCancel = () => {
+    setTitle("");
+    setAmount("");
+    setCategory("");
+    setDate("");
+    setError("");
+
+    if (onCancel) {
+      onCancel();
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -105,9 +118,20 @@ export default function ExpenseForm({ onAdd, onUpdate, editingExpense }: Props) 
           onChange={(e) => {{setDate(e.target.value); setError("");}}}
         />
 
-        <button className="btn btn-primary w-100">
-          {editingExpense ? "Güncelle" : "Ekle"}
-        </button>
+        <div className="d-flex gap-2">
+          <button className="btn btn-primary w-100">
+            {editingExpense ? "Güncelle" : "Ekle"}
+          </button>
+          {editingExpense && (
+            <button
+            type="button"
+            className="btn btn-outline-secondary w-100"
+            onClick={handleCancel}
+            >
+            İptal
+            </button>
+          )}
+        </div>
       </form>
     </div>
   );
