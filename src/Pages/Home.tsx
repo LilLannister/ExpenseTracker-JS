@@ -24,7 +24,9 @@ export default function Home() {
     return [];
   })
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState("all"); const [searchText, setSearchText] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("all"); 
+  const [searchText, setSearchText] = useState(""); 
+  const [sortOption, setSortOption] = useState("newest");
 
   const filteredExpenses = expenses.filter((expenses)=> {
     const matchesCategory =
@@ -35,7 +37,27 @@ export default function Home() {
       .includes(searchText.toLocaleLowerCase());
       
     return matchesCategory && matchesSearch;
-  })
+  }).sort((a, b) => {
+    if (sortOption === "newest") {
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    }
+    if (sortOption === "oldest") {
+      return new Date(a.date).getTime() - new Date(b.date).getTime();
+    }
+    if (sortOption === "amountHigh") {
+      return Number(b.amount) - Number(a.amount);
+    }
+    if (sortOption === "amountLow") {
+      return Number(a.amount) - Number(b.amount);
+    } 
+    if(sortOption === "amountHigh") {
+      return Number(b.amount) - Number(a.amount);
+    }
+    if(sortOption === "amountLow") {
+      return Number(a.amount) - Number(b.amount);
+    } 
+    return 0;
+  });
     
   const addExpense = (expense: any) => {
     setExpenses([...expenses, expense]);
@@ -89,6 +111,19 @@ export default function Home() {
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
         />
+      </div>
+      <div className="card p-3 mb-4 shadow-sm">
+        <label className="form-label fw-semibold">Sırala</label>
+        <select
+        className="form-select"
+        value={sortOption}
+        onChange={(e) => setSortOption(e.target.value)}
+        >
+          <option value="newest">En Yeni</option>
+          <option value="oldest">En Eski</option>
+          <option value="amountHigh">Tutar (Yüksekten Düşüğe)</option>
+          <option value="amountLow">Tutar (Düşükten Yükseğe)</option>
+        </select>
       </div>
       <ExpenseList
         expenses={filteredExpenses}
