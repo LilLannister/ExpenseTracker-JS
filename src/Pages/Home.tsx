@@ -24,13 +24,19 @@ export default function Home() {
     return [];
   })
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedCategory, setSelectedCategory] = useState("all"); const [searchText, setSearchText] = useState("");
 
-  const filteredExpenses =
-    selectedCategory === "all"
-      ? expenses
-      : expenses.filter((expense) => expense.category === selectedCategory);
-
+  const filteredExpenses = expenses.filter((expenses)=> {
+    const matchesCategory =
+      selectedCategory === "all" || expenses.category === selectedCategory;
+      
+      const matchesSearch = expenses.title
+      .toLocaleLowerCase()
+      .includes(searchText.toLocaleLowerCase());
+      
+    return matchesCategory && matchesSearch;
+  })
+    
   const addExpense = (expense: any) => {
     setExpenses([...expenses, expense]);
   };
@@ -75,6 +81,15 @@ export default function Home() {
         selectedCategory={selectedCategory}
         onCategoryChange={setSelectedCategory}
       />
+      <div className="card p-3 mb-4 shadow-sm">
+        <label className="form-label fw-semibold">Harcama Ara</label>
+        <input
+          className="form-control"
+          placeholder="Harcama adını yazın..."
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+        />
+      </div>
       <ExpenseList
         expenses={filteredExpenses}
         onDelete={deleteExpense}
