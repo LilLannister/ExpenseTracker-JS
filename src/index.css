@@ -64,3 +64,20 @@ body {
   color: #d9f3ff;
   border-color: #315b6b;
 }
+
+.card { 
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.btn {
+  transition: all 0.15 ease;
+}
+
+.btn:hover {
+  transform: scale(1.02);
+}

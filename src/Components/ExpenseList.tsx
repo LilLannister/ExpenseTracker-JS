@@ -18,7 +18,16 @@ export default function ExpenseList({ expenses, onDelete, onEdit }: Props) {
       <h5 className="mb-3">📋 Harcama Listesi</h5>
 
       {expenses.length === 0 ? (
-        <div className="alert alert-info">Henüz harcama kaydı eklenmedi.</div>
+        <div className="text-center py-5">
+          <div style={{fontSize: "48px"}}>📭</div>
+          <h5 className="mt-3">Henüz Harcama Yok</h5>
+          <p className="text-muted">
+            Yeni bir harcama ekleyerek başlayabilirsiniz.
+          </p>
+          <button className="btn btn-primary mt-2">
+            İlk harcamanı ekle
+          </button>
+        </div>
       ) : (
         expenses.map((expense) => (
           <div className="card p-3 mb-2 shadow-sm" key={expense.id}>
