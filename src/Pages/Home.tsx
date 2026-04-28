@@ -141,43 +141,41 @@ export default function Home() {
           focusTrigger={focusTrigger}
         />
 
-        <ExpenseFilter
-          expenses={expenses}
-          selectedCategory={selectedCategory}
-          onCategoryChange={setSelectedCategory}
-        />
+        <div className="toolbar">
+          <div style={{ minWidth: "180px" }}>
+            <ExpenseFilter
+              expenses={expenses}
+              selectedCategory={selectedCategory}
+              onCategoryChange={setSelectedCategory}
+            />
+          </div>
 
-        <div className="card p-3 mb-4 shadow-sm">
-          <label className="form-label fw-semibold">Harcama Ara</label>
           <input
             className="form-control"
-            placeholder="Harcama adını yazın..."
+            placeholder="Search"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
-        </div>
 
-        <div className="text-end mb-3">
-            <button
-              className="btn btn-success btn-sm"
-              onClick={() => exportToCSV(expenses)}
-              >
-                ⬇️ CSV İndir
-              </button>
-        </div>
-
-        <div className="card p-3 mb-4 shadow-sm">
-          <label className="form-label fw-semibold">Sırala</label>
           <select
             className="form-select"
+            style={{ minWidth: "230px" }}
             value={sortOption}
             onChange={(e) => setSortOption(e.target.value)}
           >
-            <option value="newest">En Yeni</option>
-            <option value="oldest">En Eski</option>
-            <option value="amountHigh">Tutar (Yüksekten Düşüğe)</option>
-            <option value="amountLow">Tutar (Düşükten Yükseğe)</option>
+            <option value="newest">Tarihe göre: Yeni</option>
+            <option value="oldest">Tarihe göre: Eski</option>
+            <option value="amountHigh">Tutar: Yüksekten Düşüğe</option>
+            <option value="amountLow">Tutar: Düşükten Yükseğe</option>
           </select>
+
+          <button
+            className="btn btn-outline-success"
+            style={{ minWidth: "140px" }}
+            onClick={() => exportToCSV(expenses)}
+          >
+            CSV İndir 
+          </button>
         </div>
 
         <ExpenseList

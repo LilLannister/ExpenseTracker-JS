@@ -18,22 +18,18 @@ export default function ExpenseFilter({ expenses, selectedCategory, onCategoryCh
     );
 
     return (
-        <div className="card p-3 mb-4 shadow-sm">
-            <label className="form-label fw-semibold">
-                Kategoriye Göre Filtrele
-            </label>
-            <select
-                className="form-select"
-                value={selectedCategory}
-                onChange={(e) => onCategoryChange(e.target.value)}
-                >
-                <option value="all">Tüm Kategoriler</option>
-                {categories.map((category) => (
-                    <option value={category} key={category}>
-                        {category}
-                    </option>
-                ))}
-            </select>
-        </div>
-    )
+        <select
+        className="form-select"
+        value={selectedCategory}
+        onChange={(e)=>onCategoryChange(e.target.value)}
+        >
+            <option value="all">Tüm Kategoriler</option>
+            
+            {categories.map((category) =>  (
+                <option value={category} key={category}>
+                    {category}
+                </option>
+            ))}
+        </select>
+    );
 }
