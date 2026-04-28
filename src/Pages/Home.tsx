@@ -170,7 +170,7 @@ export default function Home() {
           </select>
 
           <button
-            className="btn btn-outline-success"
+            className="btn btn-export"
             style={{ minWidth: "140px" }}
             onClick={() => exportToCSV(expenses)}
           >
