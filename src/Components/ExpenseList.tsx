@@ -10,9 +10,10 @@ type Props = {
   expenses: Expense[];
   onDelete: (id: string) => void;
   onEdit: (id: string) => void;
+  onStartAdd?: () => void;
 };
 
-export default function ExpenseList({ expenses, onDelete, onEdit }: Props) {
+export default function ExpenseList({ expenses, onDelete, onEdit, onStartAdd }: Props) {
   return (
     <div className="mb-4">
       <h5 className="mb-3">📋 Harcama Listesi</h5>
@@ -24,7 +25,13 @@ export default function ExpenseList({ expenses, onDelete, onEdit }: Props) {
           <p className="text-muted">
             Yeni bir harcama ekleyerek başlayabilirsiniz.
           </p>
-          <button className="btn btn-primary mt-2">
+          <button 
+          className="btn btn-primary mt-2"
+          onClick={() => {
+            window.scrollTo({top: 0, behavior: "smooth"});
+            onStartAdd?.();
+          }}
+          >
             İlk harcamanı ekle
           </button>
         </div>

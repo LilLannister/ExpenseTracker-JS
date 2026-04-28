@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Expense = {
   id: string;
@@ -13,14 +13,16 @@ type Props = {
   onUpdate: (expense: Expense) => void;
   onCancel?: () => void;
   editingExpense: Expense | null;
+  focusTrigger?: number;
 };
 
-export default function ExpenseForm({ onAdd, onUpdate, onCancel, editingExpense }: Props) {
+export default function ExpenseForm({ onAdd, onUpdate, onCancel, editingExpense, focusTrigger }: Props) {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
   const [date, setDate] = useState("");
   const [error, setError] = useState("");
+  const titleRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (editingExpense) {
@@ -30,7 +32,14 @@ export default function ExpenseForm({ onAdd, onUpdate, onCancel, editingExpense 
         setCategory(editingExpense.category);
         setDate(editingExpense.date);
     }
+    
   }, [editingExpense]);
+
+  useEffect(() => {
+    if(focusTrigger !== undefined){
+      titleRef.current?.focus();
+    }
+  }, [focusTrigger]);
 
   const handleCancel = () => {
     setTitle("");
@@ -96,6 +105,7 @@ export default function ExpenseForm({ onAdd, onUpdate, onCancel, editingExpense 
 
       <form onSubmit={handleSubmit}>
         <input
+          ref={titleRef}
           className="form-control mb-2"
           placeholder="Harcama Adı"
           value={title}

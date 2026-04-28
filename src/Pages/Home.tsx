@@ -34,6 +34,7 @@ export default function Home() {
     return localStorage.getItem("darkMode") === "true";
     }
   );
+  const [focusTrigger, setFocusTrigger] = useState(0);
 
   const filteredExpenses = expenses
     .filter((expense) => {
@@ -137,6 +138,7 @@ export default function Home() {
           onUpdate={updateExpense}
           onCancel={cancelEdit}
           editingExpense={editingExpense}
+          focusTrigger={focusTrigger}
         />
 
         <ExpenseFilter
@@ -182,6 +184,7 @@ export default function Home() {
           expenses={filteredExpenses}
           onDelete={deleteExpense}
           onEdit={startEditExpense}
+          onStartAdd={() => setFocusTrigger((prev) => prev + 1)}
         />
 
         {message && (
