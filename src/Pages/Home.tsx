@@ -4,6 +4,7 @@ import SummaryCards from "../Components/SummaryCards";
 import ExpenseForm from "../Components/ExpenseForm";
 import ExpenseList from "../Components/ExpenseList";
 import ExpenseFilter from "../Components/ExpenseFilter";
+import { exportToCSV } from "../utils/exportCSV";
 
 type Expense = {
   id: string;
@@ -152,6 +153,15 @@ export default function Home() {
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
+        </div>
+
+        <div className="text-end mb-3">
+            <button
+              className="btn btn-success btn-sm"
+              onClick={() => exportToCSV(expenses)}
+              >
+                ⬇️ CSV İndir
+              </button>
         </div>
 
         <div className="card p-3 mb-4 shadow-sm">
