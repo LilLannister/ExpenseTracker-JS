@@ -34,7 +34,7 @@ Kullanıcılar harcamalarını kolayca ekleyebilir, düzenleyebilir, filtreleyeb
 
 ## 📸 Preview
 
-> (Buraya screenshot ekleyeceğiz)
+<img width="768" height="1024" alt="BBACCC51-38C5-43F2-9D52-349D3A97853D_1_105_c" src="https://github.com/user-attachments/assets/897621d1-d38d-4bf5-b795-fd05c6e7589c" />
 
 ---
 
