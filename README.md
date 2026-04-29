@@ -40,7 +40,7 @@ Kullanıcılar harcamalarını kolayca ekleyebilir, düzenleyebilir, filtreleyeb
 
 ## 🔗 Live Demo
 
-> (Deploy sonrası buraya link eklenecek)
+https://69f1a0b70c20bf00089c8e80--glittery-dusk-4a2de4.netlify.app/
 
 ---
 
